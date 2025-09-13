@@ -1,22 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flower Catalogue</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fffaf5;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #ff69b4;
+      margin-bottom: 20px;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .flower-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      width: 180px;
+    }
+    .flower-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .flower-card p {
+      margin-top: 5px;
+      font-weight: bold;
+      color: #333;
+      text-transform: capitalize;
+    }
+  </style>
 </head>
 <body>
+
   <h1>🌸 Flower Catalogue 🌸</h1>
-  <div class="gallery">
-    <div class="flower">
-      <img src="images/sample1.jpg" alt="Rose" />
-      <p>Rose</p>
-    </div>
-    <div class="flower">
-      <img src="images/sample2.jpg" alt="Tulip" />
-      <p>Tulip</p>
-    </div>
-  </div>
+  <div class="gallery" id="gallery"></div>
+
+  <script>
+    async function loadImages() {
+      try {
+        const repoOwner = "Muchoki96";   // ✅ your username
+        const repoName = "Flowers";      // ✅ your repo name
+        const branch = "main";
+
+        const res = await fetch(
+          `https://api.github.com/repos/${repoOwner}/${repoName}/contents/images?ref=${branch}`
+        );
+
+        const files = await res.json();
+
+        const gallery = document.getElementById("gallery");
+
+        files
+          .filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i))
+          .forEach(file => {
+            const name = file.name.replace(/\.[^/.]+$/, "");
+            const div = document.createElement("div");
+            div.classList.add("flower-card");
+            div.innerHTML = `
+              <img src="images/${file.name}" alt="${name}">
+              <p>${name}</p>
+            `;
+            gallery.appendChild(div);
+          });
+      } catch (e) {
+        console.error("Failed to load images", e);
+      }
+    }
+
+    loadImages();
+  </script>
+
 </body>
 </html>
