@@ -1,0 +1,31 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #fff8f9;
+  color: #5a3e36;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.flower {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  max-width: 200px;
+}
+
+.flower img {
+  max-width: 100%;
+  border-radius: 10px;
+}
