@@ -1,31 +1,54 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(to bottom right, #fffaf5, #ffeaf2);
   text-align: center;
-  background: #fff8f9;
-  color: #5a3e36;
+  margin: 0;
+  padding: 20px;
 }
 
 h1 {
+  color: #c71585;
+  margin-bottom: 25px;
   font-size: 2rem;
-  margin: 1rem 0;
+  text-shadow: 1px 1px 3px rgba(199, 21, 133, 0.1);
 }
 
 .gallery {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  justify-content: center;
+  gap: 20px;
+  padding-bottom: 30px;
 }
 
-.flower {
+.flower-card {
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  max-width: 200px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 12px;
+  width: 180px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.flower img {
-  max-width: 100%;
-  border-radius: 10px;
+.flower-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.flower-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.flower-card p {
+  margin-top: 10px;
+  background-color: #fff0f6;
+  border-radius: 6px;
+  padding: 6px 8px;
+  display: inline-block;
+  font-weight: bold;
+  color: #c71585;
+  font-size: 1.05em;
+  letter-spacing: 0.5px;
 }
