@@ -50,32 +50,47 @@
   <script>
     async function loadImages() {
       try {
-        const repoOwner = "Muchoki96";   // ✅ your username
-        const repoName = "Flowers";      // ✅ your repo name
-        const branch = "master";
+        const repoOwner = "Muchoki96";   // ✅ your GitHub username
+        const repoName = "Flowers-";    // ✅ FIXED repo name (with dash)
+        const branch = "main";
 
+        console.log("🔎 Fetching images from:", `https://api.github.com/repos/${repoOwner}/${repoName}/contents/images?ref=${branch}`);
+        
         const res = await fetch(
           `https://api.github.com/repos/${repoOwner}/${repoName}/contents/images?ref=${branch}`
         );
 
+        if (!res.ok) {
+          console.error("❌ GitHub API error:", res.status, res.statusText);
+          document.body.insertAdjacentHTML("beforeend", `<p style="color:red;">Could not load images (API returned ${res.status})</p>`);
+          return;
+        }
+
         const files = await res.json();
+        console.log("✅ Files returned by GitHub:", files);
 
         const gallery = document.getElementById("gallery");
+        const imageFiles = files.filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i));
+        console.log("📷 Filtered images:", imageFiles.map(f => f.name));
 
-        files
-          .filter(file => file.name.match(/\.(jpg|jpeg|png|gif)$/i))
-          .forEach(file => {
-            const name = file.name.replace(/\.[^/.]+$/, "");
-            const div = document.createElement("div");
-            div.classList.add("flower-card");
-            div.innerHTML = `
-              <img src="images/${file.name}" alt="${name}">
-              <p>${name}</p>
-            `;
-            gallery.appendChild(div);
-          });
+        if (imageFiles.length === 0) {
+          gallery.innerHTML = "<p style='color:red;'>No images found in /images folder.</p>";
+        }
+
+        imageFiles.forEach(file => {
+          const name = file.name.replace(/\.[^/.]+$/, "");
+          const div = document.createElement("div");
+          div.classList.add("flower-card");
+          div.innerHTML = `
+            <img src="https://raw.githubusercontent.com/${repoOwner}/${repoName}/${branch}/images/${file.name}" alt="${name}">
+            <p>${name}</p>
+          `;
+          gallery.appendChild(div);
+        });
+
       } catch (e) {
-        console.error("Failed to load images", e);
+        console.error("⚠️ Failed to load images:", e);
+        document.body.insertAdjacentHTML("beforeend", `<p style="color:red;">An error occurred while loading images.</p>`);
       }
     }
 
