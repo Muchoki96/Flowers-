@@ -125,7 +125,7 @@
     images.forEach(img => {
       const card = document.createElement('div');
       card.classList.add('card');
-      card.innerHTML = <img src="${img.src}" alt="${img.name}"><p>${img.name}</p>;
+      card.innerHTML = `<img src="${img.src}" alt="${img.name}"><p>${img.name}</p>`;
       gallery.appendChild(card);
     });
   </script>
